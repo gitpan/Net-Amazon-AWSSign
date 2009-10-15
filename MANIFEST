@@ -1,0 +1,6 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/Net-Amazon-AWSSign.t
+lib/Net/Amazon/AWSSign.pm

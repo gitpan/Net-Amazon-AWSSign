@@ -1,0 +1,6 @@
+Revision history for Perl extension Net::Amazon::AWSSign.
+
+0.01  Thu Oct 15 15:15:41 2009
+	- original version; created by h2xs 1.23 with options
+		-AXc -n Net::Amazon::AWSSign
+
