@@ -4,3 +4,6 @@ Revision history for Perl extension Net::Amazon::AWSSign.
 	- original version; created by h2xs 1.23 with options
 		-AXc -n Net::Amazon::AWSSign
 
+0.02  Thu Oct 15 19:06:41 2009
+	- Used 'make dist' instead of just tar command.  Yeah, I'm that new to this.
+

@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '0.01';
+$VERSION = '0.02';
 
 use MIME::Base64;
 use Digest::SHA qw(hmac_sha256_base64);

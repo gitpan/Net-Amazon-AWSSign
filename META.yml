@@ -1,0 +1,13 @@
+--- #YAML:1.0
+name:                Net-Amazon-AWSSign
+version:             0.02
+abstract:            Perl extension to create signatures for AWS requests
+license:             ~
+author:              
+    - Naton Aiman-Smith <naton@>
+generated_by:        ExtUtils::MakeMaker version 6.42
+distribution_type:   module
+requires:     
+meta-spec:
+    url:     http://module-build.sourceforge.net/META-spec-v1.3.html
+    version: 1.3
