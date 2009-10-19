@@ -7,3 +7,6 @@ Revision history for Perl extension Net::Amazon::AWSSign.
 0.02  Thu Oct 15 19:06:41 2009
 	- Used 'make dist' instead of just tar command.  Yeah, I'm that new to this.
 
+0.03  Mon Oct 19 10:06:41 2009
+	- Fixed a typo in the documentation.  No functional changes.
+

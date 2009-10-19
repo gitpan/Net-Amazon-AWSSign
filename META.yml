@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                Net-Amazon-AWSSign
-version:             0.02
+version:             0.03
 abstract:            Perl extension to create signatures for AWS requests
 license:             ~
 author:              
