@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '0.03';
+$VERSION = '0.04';
 
 use MIME::Base64;
 use Digest::SHA qw(hmac_sha256_base64);
@@ -106,7 +106,7 @@ Net::Amazon::AWSSign - Perl extension to create signatures for AWS requests
   my $awsSign=new Net::Amazon::AWSSign("$awsKey", "$awsSecret");  # New object
   # SOAP
   my $awsSOAPAction=ItemSearch;
-  my ($SOAPTimestamp, $SOAPSignature)=$awsSign->SOAPSecret($awsSOAPAction);
+  my ($SOAPTimestamp, $SOAPSignature)=$awsSign->SOAPSig($awsSOAPAction);
   # REST
   my $awsASIN='B000002U82';   # Dark Side of the Moon
   my $awsRESTURI="http://webservices.amazon.com/onca/xml?Service=AWSECommerceService&Operation=ItemLookup&ItemId=$awsASIN&ResponseGroup=Medium"; # Simple lookup

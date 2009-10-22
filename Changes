@@ -10,3 +10,6 @@ Revision history for Perl extension Net::Amazon::AWSSign.
 0.03  Mon Oct 19 10:06:41 2009
 	- Fixed a typo in the documentation.  No functional changes.
 
+0.04  Thu Oct 22 09:17:25 2009
+	- Another documentation problem - had an old name for the SOAP function in the synopsis.
+
