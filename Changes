@@ -19,3 +19,6 @@ Revision history for Perl extension Net::Amazon::AWSSign.
 0.06  Fri Oct 23 11:45:52 2009
 	- Reduced required Perl version to 5.8.8 - should be fine
 
+0.07  Mon Oct 26 11:40:07 2009
+	- Changed required version to 5.8 using another mod as template.  Hopefully that'll do it!
+

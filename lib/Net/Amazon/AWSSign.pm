@@ -1,11 +1,11 @@
 package Net::Amazon::AWSSign;
 
-use 5.008800;
+use 5.008;
 use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '0.06';
+$VERSION = '0.07';
 
 use MIME::Base64;
 use Digest::SHA qw(hmac_sha256_base64);
