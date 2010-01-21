@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '0.07';
+$VERSION = '0.08';
 
 use MIME::Base64;
 use Digest::SHA qw(hmac_sha256_base64);
@@ -114,21 +114,26 @@ Net::Amazon::AWSSign - Perl extension to create signatures for AWS requests
 
 =head1 DESCRIPTION
 
-This module can be used to sign requests to Amazon's AWS.  While this is designed for AWS, it should work for pretty much any service, since the signing method is the same for all Amazon services.
+This module can be used to sign requests for most Amazon AWS services.  While this is designed for simple lookups, it should work for pretty much any service (i.e. SDB, ELB), since the signing method is the same for all Amazon services.
+If you want to write your own program to use an Amazon API, this module might save you some time.  Or, feel free to paste it into your own modules as long as you follow the license requirements.
 
-The synopsis pretty much says it all.  But, in the interest of full documentation, here are the available methods.
+As for available methods, the synopsis / example pretty much says it all.  But, in the interest of full documentation...
 
 =head2 METHODS
 
 =over 4
 
-=item * $object->SOAPSig(AWS_Action);
+=item * new Net::Amazon::AWSSign("$AWS_Key", "$AWS_Secret")
+
+Creates a new object.  If you don't have a AWS key / secret you can register to get one free at http://aws.amazon.com/.
+
+=item * SOAPSig($AWS_SOAP_Action)
 
 Returns values for aws:Timestamp and aws:Signature to be included in your SOAP header.  AWS recommends that you use certificate-based WS-Security instead of this method, but if you just need to do some quick and dirty one-time work it'll get the job done.
 
-=item * $object->addRESTSecret(Unsigned_URI);
+=item * addRESTSecret($Unsigned_URI)
 
-Takes an unsigned REST URI as an argument and returns the signed URI.  If the key is not already found in the string it will be automatically added before signing.
+Takes an unsigned REST URI as an argument and returns the signed URI.  If the key is not already included in the URI, it will be automatically added before signing.
 
 =back
 
@@ -145,7 +150,7 @@ Naton Aiman-Smith, E<lt>naton@cpan.orgE<gt>
 Copyright (C) 2009 by Naton Aiman-Smith
 
 This library is free software; you can redistribute it and/or modify
-it under the same terms as Perl itself, either Perl version 5.10.0 or,
+it under the same terms as Perl itself, either Perl version 5.8.8 or,
 at your option, any later version of Perl 5 you may have available.
 
 
