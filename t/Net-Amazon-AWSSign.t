@@ -20,7 +20,7 @@ my $aws=new Net::Amazon::AWSSign("$testKey", "$testSecret");
 #Rest
 my $testUri="http://ecs.amazonaws.com/onca/xml?Service=AWSECommerceService&Version=2009-03-31&Operation=ItemSearch&SearchIndex=Books&Keywords=harry+potter&Timestamp=2009-10-15T13:34:06Z";
 my $signedUri=$aws->addRESTSecret($testUri);
-ok ($signedUri=~m/UGlm8ThUYHcm1FFFaiae8NmV0sWB41MXUo16ZqaavTY%3D/, 'Signed a REST query' );
+ok ($signedUri=~m/0iuZwpjlGArV7MyuU0kvzHFkf2wBjhMo6poKZvr0eV4/, 'Signed a REST query' );
 
 #Soap and timestamp
 # Can't really test this since the Timestamp is a pretty critical part of the function!
@@ -33,5 +33,5 @@ print OUTFILE "testSoap is $testSoap\n";
 print OUTFILE "length is ", length($testSoap), "\n";
 close OUTFILE;
 ok (length($testSoap)==44);
-ok (length($testTimestamp)==20);
+ok (length($testTimestamp)==24);
 ok ($testTimestamp=~m/^2.*Z$/);

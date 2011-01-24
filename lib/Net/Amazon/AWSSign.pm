@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '0.08';
+$VERSION = '0.09';
 
 use MIME::Base64;
 use Digest::SHA qw(hmac_sha256_base64);
@@ -28,6 +28,7 @@ my @b;
 my $z;
 my $y;
 # For the secret generator
+my $requestProtocol;
 my $requestHost;
 my $requestPath;
 
@@ -48,24 +49,43 @@ sub new
 
 sub addRESTSecret {
   my ($self, $request)=@_;
-  unless ($request=~m/\&Timestamp=2/) { $request=$request . "&Timestamp=" . &getAWSTimeStamp(); }
+  unless ($request=~m/\&Timestamp=2/) { 
+  	$request=$request . "&Timestamp=" . &getAWSTimeStamp(); 
+  }
   $finalString="GET\n";
   # Not sure why I thought this was important, but I probably had some rationale, so leaving it in here.
-  if ($request=~m/http?:\/\/(.*?)\/(.*?)\?/) { $requestHost="$1"; $requestPath="/$2"; $finalString=$finalString . "$1\n/$2\n"; } else { return "ERROR: Cannot determine hostname and base path of request"; }
+  if ($request=~m/^(http|https)?:\/\/(.*?)\/(.*?)\?/) { 
+	$requestProtocol="$1";
+  	$requestHost="$2"; 
+  	$requestPath="/$3"; 
+  	$finalString=$finalString . "$2\n/$3\n"; 
+  }else{ 
+  	return "ERROR: Cannot determine hostname and base path of request"; 
+  }
   # Get just the parameters
   @a=split(/\?/, $request, 2);
   # If we don't already have the subscription ID in the argument list, then add it.
-  unless ($a[1]=~m/$self->{_AWSKey}/) { $a[1]="$a[1]&SubscriptionId=$self->{_AWSKey}"; }
+  unless ($a[1]=~m/$self->{_AWSKey}/) { $a[1]="$a[1]&AWSAccessKeyId=$self->{_AWSKey}"; }
+  # Ditto for the SHA version and Signature version
+  unless ($a[1]=~m/HmacSHA256/) { $a[1]="$a[1]&SignatureMethod=HmacSHA256"; }
+  unless ($a[1]=~m/SignatureVersion/) { $a[1]="$a[1]&SignatureVersion=2"; }
+
   @params=split(/\&/, $a[1]);
   # Sort and URI encode arguments, slam them into @b
   undef @b;
-  foreach $z (sort @params) { @a=split(/=/, $z, 2); $a[1]=URI::Escape::uri_escape( "$a[1]", "^A-Za-z0-9\-_.~" ); $z=join('=', @a); push (@b, $z); }
+  foreach $z (sort @params) { 
+  	@a=split(/=/, $z, 2); 
+  	$a[1]=URI::Escape::uri_escape( "$a[1]", "^A-Za-z0-9\-_.~" ); 
+  	$z=join('=', @a); 
+  	push (@b, $z); 
+  }
   $finalString="$finalString" . join ('&', @b);
+
   $AWSSignature=hmac_sha256_base64("$finalString", "$self->{_AWSSecret}");
   # For some reason we usually need an equals sign appended.  Check if required
   unless ($AWSSignature=~m/=$/) { $AWSSignature=$AWSSignature . "="; }
   $AWSSignature=URI::Escape::uri_escape( "$AWSSignature", "^A-Za-z0-9\-_.~" );
-  return "http://" . $requestHost . $requestPath . "?" . join ('&', @b) . "&Signature=" . $AWSSignature;
+  return "$requestProtocol://" . $requestHost . $requestPath . "?" . join ('&', @b) . "&Signature=" . $AWSSignature;
 }
 
 sub SOAPSig {
@@ -82,12 +102,15 @@ sub SOAPSig {
 
 ## Internal subs
 sub getAWSTimeStamp {
-  @a=gmtime(time);
-  #@a=gmtime(1230811200);
-  $a[4]++; # Increment the month
-  $a[5]=$a[5] + 1900;
-  foreach $z (0..$#a) { if ($a[$z]<10) { $a[$z]="0$a[$z]"; }}
-  return "$a[5]-$a[4]-$a[3]T$a[2]:$a[1]:$a[0]Z";
+	# The Timestamp must be generated in a specific format.
+    return sprintf("%04d-%02d-%02dT%02d:%02d:%02d.000Z",
+       sub {    ($_[5]+1900,
+                 $_[4]+1,
+                 $_[3],
+                 $_[2],
+                 $_[1],
+                 $_[0])
+           }->(gmtime(time)));
 }
 
 1;

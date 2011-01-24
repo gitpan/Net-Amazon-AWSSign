@@ -25,3 +25,7 @@ Revision history for Perl extension Net::Amazon::AWSSign.
 0.08  Thu Jan 21 09:57:22 2010
 	- Updated documentation.  No changes to actual code.
 
+0.09  Mon Dec 13 23:37:03 2010
+	- Implemented changes (fixed key param and syntactical cleanup) as done by Bee Software (beesw.com)
+	- Added in params for Sig version and SHA version, also fixed to use https as well as http
+
