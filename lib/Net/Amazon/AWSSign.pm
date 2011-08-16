@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '0.10';
+$VERSION = '0.11';
 
 use MIME::Base64;
 use Digest::SHA qw(hmac_sha256_base64);
@@ -139,7 +139,7 @@ Net::Amazon::AWSSign - Perl extension to create signatures for AWS requests
 
 =head1 DESCRIPTION
 
-This module can be used to sign requests for most Amazon AWS services.  While this is designed for simple lookups, it should work for pretty much any service (i.e. SDB, ELB), since the signing method is the same for all Amazon services.
+This module can be used to sign requests for most Amazon AWS services.  While this is designed for simple lookups, it should work for pretty much any service (i.e. EC2), since the signing method is the same for all Amazon services.
 If you want to write your own program to use an Amazon API, this module might save you some time.  Or, feel free to paste it into your own modules as long as you follow the license requirements.
 
 As for available methods, the synopsis / example pretty much says it all.  But, in the interest of full documentation...
@@ -161,6 +161,13 @@ Returns values for aws:Timestamp and aws:Signature to be included in your SOAP h
 Takes an unsigned REST URI as an argument and returns the signed URI.  If the key is not already included in the URI, it will be automatically added before signing.
 
 =back
+
+=head2 SPECIAL CHARACTERS
+
+If you need to insert special characters (most commonly '&') in your query string then you should escape them beforehand.
+For example:
+
+  my $awsRESTURI="http://webservices.amazon.com/onca/xml?Service=AWSECommerceService&Operation=ItemSearch&SearchIndex=Books&Condition=All&Keywords=Heckle%26Jeckle";
 
 =head1 SEE ALSO
 
