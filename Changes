@@ -29,3 +29,6 @@ Revision history for Perl extension Net::Amazon::AWSSign.
 	- Implemented changes (fixed key param and syntactical cleanup) as done by Bee Software (beesw.com)
 	- Added in params for Sig version and SHA version, also fixed to use https as well as http
 
+0.10  Tue Aug 16 11:04:07 2011
+	- Before uri encoding arg string, uri decode them first.  This allows for escaped chars in the arguments, specifically ampersand
+

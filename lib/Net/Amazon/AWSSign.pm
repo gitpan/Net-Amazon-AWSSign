@@ -5,7 +5,7 @@ use strict;
 use warnings;
 
 use vars qw($VERSION);
-$VERSION = '0.09';
+$VERSION = '0.10';
 
 use MIME::Base64;
 use Digest::SHA qw(hmac_sha256_base64);
@@ -75,6 +75,8 @@ sub addRESTSecret {
   undef @b;
   foreach $z (sort @params) { 
   	@a=split(/=/, $z, 2); 
+	# To allow for passing in url-encoded strings, we decode it then encode it
+	$a[1]=URI::Escape::uri_unescape( "$a[1]");
   	$a[1]=URI::Escape::uri_escape( "$a[1]", "^A-Za-z0-9\-_.~" ); 
   	$z=join('=', @a); 
   	push (@b, $z); 
