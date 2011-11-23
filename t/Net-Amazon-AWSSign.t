@@ -25,7 +25,7 @@ ok ($signedUri=~m/0iuZwpjlGArV7MyuU0kvzHFkf2wBjhMo6poKZvr0eV4/, 'Signed a REST q
 #Soap and timestamp
 # Can't really test this since the Timestamp is a pretty critical part of the function!
 # On the other hand, if the REST works then this really ought to work as well
-my ($testTimestamp, $testSoap)=$aws->SOAPSig(ItemSearch);
+my ($testTimestamp, $testSoap)=$aws->SOAPSig('ItemSearch');
 open (OUTFILE, ">/tmp/awstest.out");
 print OUTFILE "testTimestamp is $testTimestamp\n";
 print OUTFILE "length is ", length($testTimestamp), "\n";
